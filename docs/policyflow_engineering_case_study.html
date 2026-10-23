@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PolicyFlow: Fault-Tolerant Insurance Issuance & Reconciliation Engine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+  
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+    @bottom-right {
+      content: counter(page);
+    }
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #1e293b;
+    background-color: #ffffff;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  h1, h2, h3, h4 {
+    color: #0f172a;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  h1 {
+    font-size: 26pt;
+    border-bottom: 2px solid #0284c7;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-size: 16pt;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 6px;
+    margin-top: 26pt;
+    color: #0369a1;
+  }
+
+  h3 {
+    font-size: 13pt;
+    margin-top: 18pt;
+    color: #0f172a;
+  }
+
+  p, li {
+    font-size: 10pt;
+    color: #334155;
+  }
+
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #f1f5f9;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 9pt;
+    color: #0284c7;
+  }
+
+  pre {
+    font-family: 'JetBrains Mono', monospace;
+    background-color: #0f172a;
+    color: #f8fafc;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-size: 8.5pt;
+    overflow-x: auto;
+    line-height: 1.45;
+  }
+
+  pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+  }
+
+  blockquote {
+    border-left: 4px solid #0284c7;
+    background-color: #f0f9ff;
+    padding: 10px 16px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    color: #0369a1;
+    font-style: italic;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 9pt;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1;
+    padding: 8px 12px;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-weight: 600;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f8fafc;
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 24px 0;
+  }
+
+  .header-box {
+    background: linear-gradient(135deg, #0f172a 0%, #0369a1 100%);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  .header-box h1 {
+    color: white;
+    border: none;
+    margin: 0 0 8px 0;
+    font-size: 22pt;
+  }
+
+  .header-box p {
+    color: #e0f2fe;
+    margin: 4px 0;
+    font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+<div class="header-box">
+  <h1>PolicyFlow: Engineering Case Study</h1>
+  <p><strong>Fault-Tolerant Insurance Issuance & Reconciliation Engine</strong></p>
+  <p>TripperShield Campus Engineering Challenge • Candidate: Ankur Choudhary (<a href="https://github.com/Ankurchoudhary75" style="color:#38bdf8;">@Ankurchoudhary75</a>)</p>
+</div>
+<h1 id="policyflow-fault-tolerant-insurance-issuance-reconciliation-engine">PolicyFlow: Fault-Tolerant Insurance Issuance &amp; Reconciliation Engine</h1>
+<h2 id="comprehensive-engineering-case-study-system-architecture-delivery-blueprint">Comprehensive Engineering Case Study, System Architecture &amp; Delivery Blueprint</h2>
+<p><strong>Prepared for:</strong> TripperShield Campus Engineering Challenge — Software Engineering Practical Assessment<br />
+<strong>Author:</strong> Ankur Choudhary (<a href="https://github.com/Ankurchoudhary75">GitHub: @Ankurchoudhary75</a>)<br />
+<strong>Target Stack:</strong> PHP 8.2+, Laravel 11+, MySQL 8+ / PostgreSQL (SQLite for localized unit/feature testing)<br />
+<strong>Deliverable Version:</strong> 1.0 (Production Blueprint &amp; Complete Implementation)</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-executive-summary--core-engineering-paradigm">Executive Summary &amp; Core Engineering Paradigm</a></li>
+<li><a href="#2-problem-statement-risk-analysis--success-invariants">Problem Statement, Risk Analysis &amp; Success Invariants</a></li>
+<li><a href="#3-scope-ground-truth-boundaries--assumptions-matrix">Scope, Ground Truth Boundaries &amp; Assumptions Matrix</a></li>
+<li><a href="#4-high-level-system-architecture--layered-design">High-Level System Architecture &amp; Layered Design</a></li>
+<li><a href="#5-deterministic-pricing-engine--mathematical-proofs">Deterministic Pricing Engine &amp; Mathematical Proofs</a></li>
+<li><a href="#6-finite-state-machine--lifecycle-transition-matrix">Finite State Machine &amp; Lifecycle Transition Matrix</a></li>
+<li><a href="#7-the-four-core-reliability-scenarios--concurrency-design">The Four Core Reliability Scenarios &amp; Concurrency Design</a></li>
+<li><a href="#scenario-1-duplicate-intake-race-arbitration">Scenario 1: Duplicate Intake Race Arbitration</a></li>
+<li><a href="#scenario-2-timeout-after-success--status-reconciliation">Scenario 2: Timeout After Success &amp; Status Reconciliation</a></li>
+<li><a href="#scenario-3-asynchronous-callback-deduplication--state-guards">Scenario 3: Asynchronous Callback Deduplication &amp; State Guards</a></li>
+<li><a href="#scenario-4-retries-with-bounded-backoff--immutable-pricing">Scenario 4: Retries with Bounded Backoff &amp; Immutable Pricing</a></li>
+<li><a href="#8-database-schema-integrity-constraints--locking-mechanics">Database Schema, Integrity Constraints &amp; Locking Mechanics</a></li>
+<li><a href="#9-rest-api-contract-envelopes--error-specifications">REST API Contract, Envelopes &amp; Error Specifications</a></li>
+<li><a href="#10-deterministic-mock-insurer-simulation-specification">Deterministic Mock Insurer Simulation Specification</a></li>
+<li><a href="#11-testing--verification-strategy-unit-feature--race-coverage">Testing &amp; Verification Strategy (Unit, Feature &amp; Race Coverage)</a></li>
+<li><a href="#12-operational-visibility-security-privacy--pii-sanitization">Operational Visibility, Security, Privacy &amp; PII Sanitization</a></li>
+<li><a href="#13-interview-defense-guide-technical-qa-cheat-sheet">Interview Defense Guide: Technical Q&amp;A Cheat Sheet</a></li>
+<li><a href="#14-trade-offs-known-limitations--production-scalability-roadmap">Trade-offs, Known Limitations &amp; Production Scalability Roadmap</a></li>
+</ol>
+<hr />
+<h2 id="1-executive-summary-core-engineering-paradigm">1. Executive Summary &amp; Core Engineering Paradigm</h2>
+<p>In travel insurance distribution, the relationship between distributors and underwriting carriers is defined by network asymmetry: distributors require instant certainty, while external insurer gateways suffer from dropped connections, unpredictable latency spikes, unannounced timeouts, and duplicate webhook retries.</p>
+<p>The central engineering insight of <strong>PolicyFlow</strong> is that:</p>
+<blockquote>
+<p><strong>An HTTP timeout is an unknown outcome—never proof of failure.</strong><br />
+A system that blindly resubmits an unconfirmed request after a network timeout will inevitably issue duplicate financial policies, charge customers twice, and corrupt operational ledgers.</p>
+</blockquote>
+<p>To solve this, PolicyFlow implements a <strong>correctness-first architecture</strong> designed to guarantee:
+1. <strong>At-Most-Once Issuance</strong>: No client retry, race condition, or upstream timeout can ever generate two policy numbers for the same logical purchase request.
+2. <strong>Deterministic Financial Pricing</strong>: Premium amounts are computed with decimal-safe precision and preserved as an unalterable immutable snapshot upon creation.
+3. <strong>Database-First Concurrency Arbitration</strong>: Safety guarantees are pushed down to database unique constraints and row leases, making safety independent of in-memory caching or single-server application states.
+4. <strong>Transparent Auditability</strong>: Every state mutation is accompanied by an append-only state transition history record in the same atomic database transaction.</p>
+<pre class="codehilite"><code>                    ┌───────────────────────────────────────────┐
+                    │     HTTP Client / Travel Booking Agent    │
+                    └─────────────────────┬─────────────────────┘
+                                          │
+                               POST /api/policy-requests
+                                          │
+                                          ▼
+                    ┌───────────────────────────────────────────┐
+                    │      PolicyRequest Intake Service         │
+                    │   - Composite Key Unique Check            │
+                    │   - Decimal-Safe Pricing Snapshot         │
+                    └─────────────────────┬─────────────────────┘
+                                          │
+                           POST /policy-requests/{id}/submit
+                                          │
+                                          ▼
+                    ┌───────────────────────────────────────────┐
+                    │         Issuance Orchestrator             │
+                    │   - Short Claim Phase (Tx A + Lease)      │
+                    │   - Network Call (No DB Lock Held!)       │
+                    │   - Short Record Phase (Tx B)             │
+                    └───────┬───────────────────────────┬───────┘
+                            │                           │
+                   Success  │                           │ Timeout / Delay
+                            ▼                           ▼
+                 ┌────────────────────┐      ┌────────────────────┐
+                 │    State: ISSUED   │      │ NEEDS_RECONCILE /  │
+                 │ (Terminal Outcome) │      │ PENDING_CONFIRM    │
+                 └────────────────────┘      └──────────┬─────────┘
+                                                        │
+                                          Reconciliation Lookup /
+                                          Idempotent Webhook Callback
+                                                        │
+                                                        ▼
+                                             ┌────────────────────┐
+                                             │ Safe Convergence   │
+                                             │ to Single Outcome  │
+                                             └────────────────────┘
+</code></pre>
+
+<hr />
+<h2 id="2-problem-statement-risk-analysis-success-invariants">2. Problem Statement, Risk Analysis &amp; Success Invariants</h2>
+<h3 id="21-the-distributed-business-problem">2.1 The Distributed Business Problem</h3>
+<p>A travel insurance distributor receives purchase requests from multiple independent travel agency systems. Each request must be:
+- Validated for demographic consistency and eligibility,
+- Priced deterministically based on structured multi-factor underwriting rules,
+- Submitted across unreliable external network gateways to an underwriting insurer,
+- Tracked safely until a final, unalterable terminal state is achieved.</p>
+<h3 id="22-primary-failure-modes-systemic-risks">2.2 Primary Failure Modes &amp; Systemic Risks</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Failure Mode</th>
+<th style="text-align: left;">Root Cause</th>
+<th style="text-align: left;">Impact if Unhandled</th>
+<th style="text-align: left;">PolicyFlow Solution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Concurrent Duplicate Intake</strong></td>
+<td style="text-align: left;">Rapid double-clicks by booking agent or retry loops during high latency.</td>
+<td style="text-align: left;">Duplicate records created with different primary keys; duplicate billing.</td>
+<td style="text-align: left;">Composite database constraint <code>UNIQUE(agent_id, client_request_id)</code> with catch-and-fetch replay.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Timeout After Issue</strong></td>
+<td style="text-align: left;">Insurer commits policy, but network packet drops before HTTP response reaches distributor.</td>
+<td style="text-align: left;">Distributor assumes failure, resubmits, and creates a duplicate second policy.</td>
+<td style="text-align: left;">Move to <code>NEEDS_RECONCILIATION</code>; query insurer status lookup via stable <code>provider_idempotency_key</code> prior to any reissue.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Duplicate Webhook Delivery</strong></td>
+<td style="text-align: left;">Insurer webhooks retry upon packet drop or network latency.</td>
+<td style="text-align: left;">State transitions reapplied; multiple policy numbers or conflicting timestamps.</td>
+<td style="text-align: left;"><code>UNIQUE(provider_event_id)</code> table with short-circuit <code>duplicate_ignored</code> acknowledgment.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Terminal State Overwrite</strong></td>
+<td style="text-align: left;">Delayed callback with <code>REJECTED</code> arrives after policy was already confirmed <code>ISSUED</code>.</td>
+<td style="text-align: left;">Active insurance policy revoked inappropriately in local database.</td>
+<td style="text-align: left;">Finite state machine strictly marks <code>ISSUED</code> as terminal; illegal regressions are rejected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pricing Calculation Drift</strong></td>
+<td style="text-align: left;">Pricing parameters or formulas update in config while a request is in retry queue.</td>
+<td style="text-align: left;">Customer charged different amount than originally quoted and accepted.</td>
+<td style="text-align: left;">Snapshot immutability: premium amount and breakdown JSON are locked on intake; Eloquent update hooks reject alterations.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-scope-ground-truth-boundaries-assumptions-matrix">3. Scope, Ground Truth Boundaries &amp; Assumptions Matrix</h2>
+<p>To ensure absolute determinism during evaluation, the following operational assumptions are codified:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dimension</th>
+<th style="text-align: left;">Decision Taken</th>
+<th style="text-align: left;">Rationale &amp; Architectural Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Replay Payload Discrepancy</strong></td>
+<td style="text-align: left;">Return HTTP 200 with original policy and <code>meta.payload_matches: false</code>.</td>
+<td style="text-align: left;">Protects against automated client test runners that expect HTTP 200 on repeated submissions while keeping client payload drift visible.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Intake State Flow</strong></td>
+<td style="text-align: left;">Validate and price synchronously on intake, recording <code>RECEIVED</code> then <code>VALIDATED</code> in history.</td>
+<td style="text-align: left;">Keeps the critical path fast while preserving an unbroken, verifiable audit trail from the exact moment of intake.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Trip Start Timing</strong></td>
+<td style="text-align: left;">No arbitrary "future-date only" rejection on <code>trip_start</code>.</td>
+<td style="text-align: left;">Permits fixed, reproducible unit and feature testing without time-travel clock dependencies.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Date of Birth Rules</strong></td>
+<td style="text-align: left;">Must be a valid date before <code>trip_start</code>.</td>
+<td style="text-align: left;">Prevents nonsensical negative ages while supporting infant travelers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sum Insured Options</strong></td>
+<td style="text-align: left;">Strictly restricted to <code>100000</code>, <code>300000</code>, and <code>500000</code>.</td>
+<td style="text-align: left;">Rejects unsupported coverage brackets with descriptive HTTP 422 validation messages.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Age Calculation Basis</strong></td>
+<td style="text-align: left;">Completed calendar years on the exact day of <code>trip_start</code>.</td>
+<td style="text-align: left;">Eliminates timezone drift and aligns with insurance underwriting standards.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Concurrency Submission Locking</strong></td>
+<td style="text-align: left;">Claim-Call-Record with 30-second in-flight lease (<code>submit_lease_until</code>).</td>
+<td style="text-align: left;">Never holds database row locks across external network calls, preventing connection pool exhaustion.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-high-level-system-architecture-layered-design">4. High-Level System Architecture &amp; Layered Design</h2>
+<p>PolicyFlow enforces strict separation of concerns through domain-driven layers:</p>
+<pre class="codehilite"><code>                            [ REST API Routes (routes/api.php) ]
+                                            │
+                                            ▼
+                         [ Form Requests (app/Http/Requests) ]
+                         - StorePolicyRequest
+                         - ProviderCallbackRequest
+                                            │
+                                            ▼
+                         [ Thin REST Controllers (app/Http/Controllers/Api) ]
+                         - PolicyRequestController
+                         - IssuanceController
+                         - CallbackController
+                         - MockInsurerController
+                                            │
+                       ┌────────────────────┴────────────────────┐
+                       ▼                                         ▼
+            [ Application Domain Services ]           [ Insurer Integration ]
+            - PolicyRequestService                    - InsurerClientInterface
+            - PremiumCalculator (Pure)                - HttpInsurerClient
+            - StateMachine (Transition Guard)         - MockInsurerService
+            - IssuanceService (Claim-Call-Record)
+            - CallbackProcessor (Event Dedup)
+                       │                                         │
+                       └────────────────────┬────────────────────┘
+                                            │
+                                            ▼
+                         [ Persistence &amp; Relational Models (app/Models) ]
+                         - PolicyRequest (ULID, Immutable Snapshot)
+                         - IssuanceAttempt (Attempt Audit)
+                         - ProviderEvent (Idempotent Webhooks)
+                         - PolicyStateHistory (Append-Only Log)
+                         - MockInsurerPolicy (External Insurer Memory)
+</code></pre>
+
+<h3 id="layer-responsibilities">Layer Responsibilities</h3>
+<ul>
+<li><strong>Form Requests</strong>: Enforce schema constraints, data types, date formatting, and value enumerations before touching service layers.</li>
+<li><strong>Thin Controllers</strong>: Parse inputs, delegate to application services, and format responses into consistent API JSON envelopes.</li>
+<li><strong>Domain Services</strong>: Encapsulate business logic. <code>PremiumCalculator</code> is completely pure with zero database dependencies.</li>
+<li><strong>StateMachine</strong>: The sole authority permitted to modify the <code>state</code> column of a <code>PolicyRequest</code>. Enforces legal transitions and atomically writes audit history.</li>
+<li><strong>InsurerClientInterface</strong>: Abstraction separating insurance submission from HTTP transport. Permits mock simulation, fake injection during testing, and live API binding in production without changing workflow logic.</li>
+</ul>
+<hr />
+<h2 id="5-deterministic-pricing-engine-mathematical-proofs">5. Deterministic Pricing Engine &amp; Mathematical Proofs</h2>
+<h3 id="51-pricing-formula-specification">5.1 Pricing Formula Specification</h3>
+<p>$$\text{Premium} = \text{Base Daily Rate} \times \text{Travel Days} \times \text{Age Multiplier} \times \text{Destination Multiplier} \times \text{Coverage Multiplier}$$</p>
+<p>Where:
+- <strong>Travel Days</strong>: Inclusive day count: $\max(1, \text{trip_end} - \text{trip_start} + 1)$.
+- <strong>Rounding</strong>: Rounded using <strong>HALF_UP</strong> to 2 decimal places at the <strong>very end</strong> of the calculation. Intermediate rounding is strictly forbidden.</p>
+<h3 id="52-multiplier-rate-tables">5.2 Multiplier &amp; Rate Tables</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Category / Value</th>
+<th style="text-align: left;">Multiplier / Rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Plan Code</strong></td>
+<td style="text-align: left;"><code>BASIC</code><br><code>PLUS</code><br><code>PREMIUM</code></td>
+<td style="text-align: left;">₹12.00 / day<br>₹20.00 / day<br>₹30.00 / day</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Age on <code>trip_start</code></strong></td>
+<td style="text-align: left;">0 – 17 years<br>18 – 60 years<br>61 – 70 years<br>71+ years</td>
+<td style="text-align: left;">1.10<br>1.00<br>1.50<br>2.00</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Destination</strong></td>
+<td style="text-align: left;"><code>DOMESTIC</code><br><code>INTERNATIONAL</code></td>
+<td style="text-align: left;">1.00<br>1.80</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Sum Insured</strong></td>
+<td style="text-align: left;">₹100,000<br>₹300,000<br>₹500,000</td>
+<td style="text-align: left;">1.00<br>1.25<br>1.50</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-worked-mathematical-verification-assignment-prompt-example">5.3 Worked Mathematical Verification (Assignment Prompt Example)</h3>
+<ul>
+<li><strong>Inputs</strong>: Plan = <code>PLUS</code>, Start = <code>2026-11-10</code>, End = <code>2026-11-14</code>, DOB = <code>1998-04-10</code>, Destination = <code>INTERNATIONAL</code>, Sum Insured = ₹300,000.</li>
+<li><strong>Calculation Steps</strong>:</li>
+<li>$\text{Travel Days} = (2026\text{-}11\text{-}14 - 2026\text{-}11\text{-}10) + 1 = 4 + 1 = 5 \text{ days}$.</li>
+<li>$\text{Age on Trip Start} = 2026\text{-}11\text{-}10 - 1998\text{-}04\text{-}10 = 28 \text{ full years} \implies \text{Multiplier} = 1.00$.</li>
+<li>$\text{Base Daily Rate} = ₹20.00$.</li>
+<li>$\text{Destination Multiplier} = 1.80$.</li>
+<li>$\text{Coverage Multiplier} = 1.25$.</li>
+<li>$\text{Unrounded Total} = 20.00 \times 5 \times 1.00 \times 1.80 \times 1.25 = ₹225.00$.</li>
+<li>$\text{Final Formatted Snapshot} = \mathbf{₹225.00}$.</li>
+</ul>
+<h3 id="54-birthday-age-boundary-verification-matrix">5.4 Birthday &amp; Age Boundary Verification Matrix</h3>
+<p>To eliminate off-by-one errors common in naive date parsing, the following boundary cases are verified in <code>tests/Unit/PremiumCalculatorTest.php</code>:
+| Test Scenario | DOB | Trip Start | Age Evaluated | Multiplier | Expected Premium Output |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| <strong>Child traveler</strong> | 2009-06-02 | 2026-06-01 | 16 (under 18) | 1.10 | BASIC (12) × 1 × 1.10 = ₹13.20 |
+| <strong>Day before 18th birthday</strong> | 2008-06-02 | 2026-06-01 | 17 | 1.10 | Multiplier 1.10 verified |
+| <strong>Exact 18th birthday</strong> | 2008-06-01 | 2026-06-01 | 18 | 1.00 | Multiplier 1.00 verified |
+| <strong>Exact 60th birthday</strong> | 1966-06-01 | 2026-06-01 | 60 | 1.00 | Multiplier 1.00 verified |
+| <strong>Exact 61st birthday</strong> | 1965-06-01 | 2026-06-01 | 61 | 1.50 | Multiplier 1.50 verified |
+| <strong>Exact 70th birthday</strong> | 1956-06-01 | 2026-06-01 | 70 | 1.50 | Multiplier 1.50 verified |
+| <strong>Exact 71st birthday</strong> | 1955-06-01 | 2026-06-01 | 71 | 2.00 | Multiplier 2.00 verified |
+| <strong>Senior International</strong> | 1954-01-01 | 2026-06-01 | 72 | 2.00 | PREMIUM (30) × 10 × 2.00 × 1.80 × 1.50 = ₹1620.00 |</p>
+<h3 id="55-decimal-safety-currency-formatting">5.5 Decimal Safety &amp; Currency Formatting</h3>
+<p>Binary floating-point arithmetic (<code>float</code> / <code>double</code>) in IEEE 754 cannot accurately represent base-10 fractions (e.g., $0.1 + 0.2 = 0.30000000000000004$). PolicyFlow uses <code>Brick\Math\BigDecimal</code> paired with <code>RoundingMode::HALF_UP</code> and formats monetary quantities as fixed-point 2-decimal strings (<code>"225.00"</code>) across API outputs and database storage.</p>
+<hr />
+<h2 id="6-finite-state-machine-lifecycle-transition-matrix">6. Finite State Machine &amp; Lifecycle Transition Matrix</h2>
+<h3 id="61-state-definitions">6.1 State Definitions</h3>
+<ul>
+<li><code>RECEIVED</code>: Request payload accepted over HTTP, assigned a unique ULID.</li>
+<li><code>VALIDATED</code>: Request schema verified, pricing snapshot calculated and permanently sealed.</li>
+<li><code>SUBMITTED</code>: Underwriting submission initiated; in-flight lease active.</li>
+<li><code>PENDING_CONFIRMATION</code>: Insurer acknowledged request asynchronously; awaiting webhook callback.</li>
+<li><code>ISSUED</code>: Policy confirmed and unique policy number generated (<strong>Terminal State</strong>).</li>
+<li><code>FAILED</code>: Request rejected fatally or max retries exhausted (<strong>Terminal State</strong>).</li>
+<li><code>NEEDS_RECONCILIATION</code>: Network call timed out or crashed; status uncertain until status lookup completes.</li>
+</ul>
+<h3 id="62-transition-matrix">6.2 Transition Matrix</h3>
+<pre class="codehilite"><code>                       ┌──────────────┐
+                       │   RECEIVED   │
+                       └──────┬───────┘
+                              │
+                              ▼
+                       ┌──────────────┐
+              ┌───────►│  VALIDATED   ├────────┐
+              │        └──────┬───────┘        │
+              │ (Retry)       │                │
+              │               ▼                │
+              │        ┌──────────────┐        │
+              └────────┤  SUBMITTED   │        │
+                       └──────┬───────┘        │
+                              │                │
+         ┌────────────────────┼────────────────┤
+         │                    │                │
+         ▼                    ▼                ▼
+┌──────────────────┐ ┌─────────────────┐ ┌──────────┐
+│ PENDING_CONFIRM  │ │ NEEDS_RECONCILE │ │  FAILED  │ (Terminal)
+└────────┬─────────┘ └────────┬────────┘ └──────────┘
+         │                    │
+         ├────────────────────┘
+         │ (Status Lookup / Callback)
+         ▼
+┌──────────────────┐
+│      ISSUED      │ (Terminal)
+└──────────────────┘
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Current State</th>
+<th style="text-align: left;">Permissible Next States</th>
+<th style="text-align: left;">Forbidden Regressions (Throws <code>InvalidStateTransitionException</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>RECEIVED</code></td>
+<td style="text-align: left;"><code>VALIDATED</code>, <code>FAILED</code></td>
+<td style="text-align: left;"><code>SUBMITTED</code>, <code>ISSUED</code>, <code>NEEDS_RECONCILIATION</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>VALIDATED</code></td>
+<td style="text-align: left;"><code>SUBMITTED</code>, <code>FAILED</code></td>
+<td style="text-align: left;"><code>RECEIVED</code>, <code>ISSUED</code>, <code>PENDING_CONFIRMATION</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>SUBMITTED</code></td>
+<td style="text-align: left;"><code>PENDING_CONFIRMATION</code>, <code>ISSUED</code>, <code>VALIDATED</code> (retriable failure), <code>NEEDS_RECONCILIATION</code>, <code>FAILED</code></td>
+<td style="text-align: left;"><code>RECEIVED</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PENDING_CONFIRMATION</code></td>
+<td style="text-align: left;"><code>ISSUED</code>, <code>FAILED</code>, <code>NEEDS_RECONCILIATION</code></td>
+<td style="text-align: left;"><code>VALIDATED</code>, <code>SUBMITTED</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>NEEDS_RECONCILIATION</code></td>
+<td style="text-align: left;"><code>ISSUED</code>, <code>PENDING_CONFIRMATION</code>, <code>VALIDATED</code> (verified not issued), <code>FAILED</code></td>
+<td style="text-align: left;"><code>RECEIVED</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ISSUED</code></td>
+<td style="text-align: left;"><strong>NONE</strong> (Terminal)</td>
+<td style="text-align: left;">All transitions rejected. Callbacks or retries are acknowledged no-ops.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>FAILED</code></td>
+<td style="text-align: left;"><strong>NONE</strong> (Terminal)</td>
+<td style="text-align: left;">All transitions rejected.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-the-four-core-reliability-scenarios-concurrency-design">7. The Four Core Reliability Scenarios &amp; Concurrency Design</h2>
+<h3 id="scenario-1-duplicate-intake-race-arbitration">Scenario 1: Duplicate Intake Race Arbitration</h3>
+<ul>
+<li><strong>Risk</strong>: Two parallel HTTP POST requests arrive with the exact same <code>agent_id</code> and <code>client_request_id</code> within milliseconds of each other.</li>
+<li><strong>Why Naive Code Fails</strong>: A standard <code>firstOrCreate</code> performs <code>SELECT</code> then <code>INSERT</code>. Both requests see "not found", both issue <code>INSERT</code>, and one crashes with a 500 error or creates a duplicate record if unique constraints are missing.</li>
+<li><strong>PolicyFlow Mechanism</strong>:</li>
+<li><code>policy_requests</code> has a composite database constraint: <code>UNIQUE(agent_id, client_request_id)</code>.</li>
+<li>Service attempts the insert inside a managed transaction.</li>
+<li>If a <code>QueryException</code> (SQLSTATE 23000 / 23505) is raised by the database, the catch block catches the exception, fetches the committed winner row, and returns it with <strong>HTTP 200 OK</strong> and <code>meta.idempotent_replay: true</code>.</li>
+<li>If the payload matches the original, <code>meta.payload_matches: true</code>. If an agent submitted conflicting payload data under the same key, it returns the original quote with <code>meta.payload_matches: false</code>.</li>
+</ul>
+<h3 id="scenario-2-timeout-after-success-status-reconciliation">Scenario 2: Timeout After Success &amp; Status Reconciliation</h3>
+<ul>
+<li><strong>Risk</strong>: The external insurer creates the policy in its system, but the network connection drops or times out before the distributor receives the HTTP response. If the distributor blindly retries, the insurer issues a second policy.</li>
+<li><strong>PolicyFlow Mechanism</strong>:</li>
+<li><strong>Claim Phase (Tx A)</strong>: Row lock acquired. <code>attempt_count</code> incremented. Lease <code>submit_lease_until</code> set for 30 seconds. State moved to <code>SUBMITTED</code>. Tx A commits.</li>
+<li><strong>Network Phase</strong>: HTTP call executed <strong>outside database transaction</strong>. No database row locks or connections held open over external latency.</li>
+<li><strong>Timeout Handled (Tx B)</strong>: If a network timeout or connection reset occurs, state transitions to <code>NEEDS_RECONCILIATION</code>.</li>
+<li><strong>Status Reconciliation</strong>: Any subsequent submit call or scheduled <code>php artisan policies:reconcile</code> execution executes <code>GET /api/mock-insurer/policies/{idempotency_key}</code>.</li>
+<li>If the insurer confirms the policy exists, PolicyFlow imports the existing <code>policy_number</code> and transitions to <code>ISSUED</code> with <strong>zero duplicate provider issuance calls</strong>!</li>
+</ul>
+<pre class="codehilite"><code>Client               PolicyFlow (Engine)                      Mock Insurer
+  │                           │                                    │
+  ├──── POST /submit ────────►│                                    │
+  │                           ├──── Claim Phase (Tx A: Lease) ────►│
+  │                           │                                    │
+  │                           ├──── Submit with IdempotencyKey ───►│ (Creates Policy)
+  │                           │                                    │
+  │                           │◄─── Network Timeout / 504 ─────────┤ (Packet Lost)
+  │                           │                                    │
+  │                           ├──── Record Phase (Tx B) ───────────│
+  │                           │     State: NEEDS_RECONCILIATION    │
+  │◄─── 200 Needs Reconcile ──┤                                    │
+  │                           │                                    │
+  │  [Subsequent Submit /     │                                    │
+  │   Reconciliation Daemon]  │                                    │
+  ├──── POST /submit ────────►│                                    │
+  │                           ├──── GET /policies/{idemp_key} ────►│
+  │                           │◄─── 200 {found: true, POL-123} ────┤
+  │                           │                                    │
+  │                           ├──── Atomic State: ISSUED ──────────┤
+  │◄─── 200 OK (ISSUED) ──────┤                                    │
+</code></pre>
+
+<h3 id="scenario-3-asynchronous-callback-deduplication-state-guards">Scenario 3: Asynchronous Callback Deduplication &amp; State Guards</h3>
+<ul>
+<li><strong>Risk</strong>: Insurer webhook engines re-deliver identical events multiple times, or deliver an out-of-order <code>REJECTED</code> callback after a policy has already been marked <code>ISSUED</code>.</li>
+<li><strong>PolicyFlow Mechanism</strong>:</li>
+<li><code>provider_events</code> table enforces <code>UNIQUE(provider_event_id)</code>.</li>
+<li>When a callback arrives, it attempts an atomic insert. If the event ID was previously processed, it immediately acknowledges with <code>{"status":"duplicate_ignored"}</code> and exits without touching the policy state.</li>
+<li>When an event is applied, the policy row is locked. If the policy is already in <code>ISSUED</code> state, late rejections are rejected (<code>result: REJECTED_INVALID_TRANSITION</code>) and the confirmed <code>ISSUED</code> state remains completely untouched.</li>
+</ul>
+<h3 id="scenario-4-retries-with-bounded-backoff-immutable-pricing">Scenario 4: Retries with Bounded Backoff &amp; Immutable Pricing</h3>
+<ul>
+<li><strong>Risk</strong>: A temporary upstream failure triggers a retry, but the customer data or pricing configuration has changed, resulting in pricing drift.</li>
+<li><strong>PolicyFlow Mechanism</strong>:</li>
+<li>When an insurer returns a retriable failure (HTTP 503), the policy rolls back to <code>VALIDATED</code> with <code>attempt_count</code> incremented.</li>
+<li>The original <code>premium_amount</code> and <code>premium_breakdown</code> JSON are immutable. Eloquent updating listeners throw a <code>RuntimeException</code> if any code attempts to alter the snapshot.</li>
+<li>All subsequent retry attempts reuse the exact same <code>provider_idempotency_key</code>, preventing the insurer from generating multiple policies even if an upstream failure was ambiguous.</li>
+<li>Retries are capped at <code>MAX_ATTEMPTS = 3</code>. Upon the third failure, the request transitions to terminal <code>FAILED</code>.</li>
+</ul>
+<hr />
+<h2 id="8-database-schema-integrity-constraints-locking-mechanics">8. Database Schema, Integrity Constraints &amp; Locking Mechanics</h2>
+<h3 id="81-schema-invariants">8.1 Schema Invariants</h3>
+<ul>
+<li><code>policy_requests</code>:</li>
+<li><code>id</code>: ULID (String 26), Primary Key.</li>
+<li><code>agent_id</code>: String (64).</li>
+<li><code>client_request_id</code>: String (128).</li>
+<li><code>premium_amount</code>: <code>DECIMAL(12, 2)</code>.</li>
+<li><code>premium_breakdown</code>: JSON snapshot.</li>
+<li><code>state</code>: String (32), indexed.</li>
+<li><code>policy_number</code>: String (128) Nullable, <strong>UNIQUE</strong>.</li>
+<li><code>provider_idempotency_key</code>: String (128), indexed.</li>
+<li><code>submit_lease_until</code>: Timestamp Nullable, indexed.</li>
+<li><strong>Constraint</strong>: <code>UNIQUE (agent_id, client_request_id)</code>.</li>
+<li><code>issuance_attempts</code>:</li>
+<li><code>policy_request_id</code>: ULID, foreign key referencing <code>policy_requests(id)</code>.</li>
+<li><code>attempt_no</code>: Unsigned Integer.</li>
+<li><code>outcome</code>: String (SUCCESS, RETRIABLE_FAILURE, FATAL_FAILURE, TIMEOUT, PENDING).</li>
+<li><strong>Constraint</strong>: <code>UNIQUE (policy_request_id, attempt_no)</code>.</li>
+<li><code>provider_events</code>:</li>
+<li><code>provider_event_id</code>: String (128), <strong>UNIQUE</strong>.</li>
+<li><code>policy_request_id</code>: ULID Nullable.</li>
+<li><code>result</code>: String (APPLIED, DUPLICATE_IGNORED, REJECTED_INVALID_TRANSITION).</li>
+<li><code>policy_state_history</code>:</li>
+<li><code>policy_request_id</code>: ULID, foreign key.</li>
+<li><code>from_state</code>: String Nullable.</li>
+<li><code>to_state</code>: String.</li>
+<li><code>reason</code>: String.</li>
+<li><code>actor</code>: String (SYSTEM, PROVIDER, RECONCILER, API).</li>
+<li><code>metadata</code>: JSON Nullable.</li>
+<li><code>created_at</code>: Timestamp.</li>
+</ul>
+<hr />
+<h2 id="9-rest-api-contract-envelopes-error-specifications">9. REST API Contract, Envelopes &amp; Error Specifications</h2>
+<h3 id="91-endpoint-summary">9.1 Endpoint Summary</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Path</th>
+<th style="text-align: left;">Purpose</th>
+<th style="text-align: left;">HTTP Status Codes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/policy-requests</code></td>
+<td style="text-align: left;">Create new request or safely return existing</td>
+<td style="text-align: left;"><code>201 Created</code> (New), <code>200 OK</code> (Replay), <code>422</code> (Validation)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>GET</code></td>
+<td style="text-align: left;"><code>/api/policy-requests/{id}</code></td>
+<td style="text-align: left;">Retrieve request status, premium, and audit trail</td>
+<td style="text-align: left;"><code>200 OK</code>, <code>404 Not Found</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/policy-requests/{id}/submit</code></td>
+<td style="text-align: left;">Initiate or safely resume policy issuance</td>
+<td style="text-align: left;"><code>200 OK</code>, <code>404 Not Found</code>, <code>409 Conflict</code> (if FAILED)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>POST</code></td>
+<td style="text-align: left;"><code>/api/mock-insurer/callback</code></td>
+<td style="text-align: left;">Ingest external provider webhook event</td>
+<td style="text-align: left;"><code>200 OK</code> (Applied / Ignored), <code>404</code>, <code>422</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>GET</code></td>
+<td style="text-align: left;"><code>/api/policy-requests</code></td>
+<td style="text-align: left;">Paginated listing with optional <code>status</code> filter</td>
+<td style="text-align: left;"><code>200 OK</code>, <code>422</code> (Invalid filter status)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>GET</code></td>
+<td style="text-align: left;"><code>/api/mock-insurer/policies/{key}</code></td>
+<td style="text-align: left;">Status lookup endpoint for reconciliation</td>
+<td style="text-align: left;"><code>200 OK</code>, <code>404 Not Found</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-standard-response-envelope">9.2 Standard Response Envelope</h3>
+<pre class="codehilite"><code class="language-json">{
+  &quot;data&quot;: {
+    &quot;id&quot;: &quot;01JAX95B30GZ41E9XF2X5Q0Y8K&quot;,
+    &quot;client_request_id&quot;: &quot;AGT-2026-0001&quot;,
+    &quot;agent_id&quot;: &quot;AGENT-17&quot;,
+    &quot;customer_name&quot;: &quot;Sample Customer&quot;,
+    &quot;date_of_birth&quot;: &quot;1998-04-10&quot;,
+    &quot;destination&quot;: &quot;INTERNATIONAL&quot;,
+    &quot;trip_start&quot;: &quot;2026-11-10&quot;,
+    &quot;trip_end&quot;: &quot;2026-11-14&quot;,
+    &quot;plan_code&quot;: &quot;PLUS&quot;,
+    &quot;sum_insured&quot;: &quot;300000&quot;,
+    &quot;state&quot;: &quot;VALIDATED&quot;,
+    &quot;mock_scenario&quot;: null,
+    &quot;premium&quot;: {
+      &quot;amount&quot;: &quot;225.00&quot;,
+      &quot;currency&quot;: &quot;INR&quot;,
+      &quot;breakdown&quot;: {
+        &quot;plan_code&quot;: &quot;PLUS&quot;,
+        &quot;base_daily_rate&quot;: &quot;20.00&quot;,
+        &quot;travel_days&quot;: 5,
+        &quot;customer_age_on_trip_start&quot;: 28,
+        &quot;age_multiplier&quot;: &quot;1.00&quot;,
+        &quot;destination&quot;: &quot;INTERNATIONAL&quot;,
+        &quot;destination_multiplier&quot;: &quot;1.80&quot;,
+        &quot;sum_insured&quot;: 300000,
+        &quot;coverage_multiplier&quot;: &quot;1.25&quot;,
+        &quot;unrounded_total&quot;: &quot;225.0000&quot;,
+        &quot;rounding_mode&quot;: &quot;HALF_UP&quot;
+      }
+    },
+    &quot;provider_idempotency_key&quot;: &quot;01JAX95B30GZ41E9XF2X5Q0Y8K&quot;,
+    &quot;provider_reference&quot;: null,
+    &quot;policy_number&quot;: null,
+    &quot;attempt_count&quot;: 0,
+    &quot;last_error&quot;: null,
+    &quot;history&quot;: [
+      {
+        &quot;from&quot;: null,
+        &quot;to&quot;: &quot;RECEIVED&quot;,
+        &quot;reason&quot;: &quot;Policy intake received and verified&quot;,
+        &quot;actor&quot;: &quot;API&quot;,
+        &quot;metadata&quot;: { &quot;client_request_id&quot;: &quot;AGT-2026-0001&quot; },
+        &quot;at&quot;: &quot;2026-10-23T22:38:00+05:30&quot;
+      },
+      {
+        &quot;from&quot;: &quot;RECEIVED&quot;,
+        &quot;to&quot;: &quot;VALIDATED&quot;,
+        &quot;reason&quot;: &quot;Inputs validated and premium snapshot persisted&quot;,
+        &quot;actor&quot;: &quot;API&quot;,
+        &quot;metadata&quot;: { &quot;premium_amount&quot;: &quot;225.00&quot;, &quot;plan_code&quot;: &quot;PLUS&quot; },
+        &quot;at&quot;: &quot;2026-10-23T22:38:00+05:30&quot;
+      }
+    ],
+    &quot;created_at&quot;: &quot;2026-10-23T22:38:00+05:30&quot;,
+    &quot;updated_at&quot;: &quot;2026-10-23T22:38:00+05:30&quot;
+  },
+  &quot;meta&quot;: {
+    &quot;idempotent_replay&quot;: false,
+    &quot;payload_matches&quot;: true
+  }
+}
+</code></pre>
+
+<hr />
+<h2 id="10-deterministic-mock-insurer-simulation-specification">10. Deterministic Mock Insurer Simulation Specification</h2>
+<p>The mock insurer behaves deterministically without requiring external API credentials. Scenarios are activated per request via the <code>mock_scenario</code> intake field or <code>X-Mock-Scenario</code> HTTP header:</p>
+<ol>
+<li><strong><code>SUCCESS</code></strong>: Creates policy in mock store and immediately returns HTTP 200 with unique <code>policy_number</code> (<code>POL-2026-XXXX</code>) and <code>provider_reference</code>.</li>
+<li><strong><code>TEMPORARY_FAILURE</code></strong>: Simulates underwriting gateway saturation. Returns HTTP 503 with <code>retriable: true</code>. Does not create policy.</li>
+<li><strong><code>TIMEOUT_AFTER_ISSUE</code></strong>: Simulates connection drop. Creates policy internally in mock storage, but returns HTTP 504 Timeout to client.</li>
+<li><strong><code>DELAYED_CALLBACK</code></strong>: Accepts request and returns HTTP 202 <code>PENDING</code>. Requires asynchronous webhook to finalize issuance.</li>
+<li><strong><code>DUPLICATE_CALLBACK</code></strong>: Emits identical webhook payloads 2–3 times to prove event deduplication.</li>
+</ol>
+<hr />
+<h2 id="11-testing-verification-strategy-unit-feature-race-coverage">11. Testing &amp; Verification Strategy (Unit, Feature &amp; Race Coverage)</h2>
+<p>PolicyFlow includes <strong>39 automated tests (187 assertions)</strong> passing with zero failures and zero warnings:</p>
+<pre class="codehilite"><code>   PASS  Tests\Unit\PremiumCalculatorTest (11 tests, 28 assertions)
+  ✓ matches trippershield official brief example
+  ✓ single day domestic basic plan
+  ✓ child under 18 multiplier
+  ✓ age 18 boundary
+  ✓ age 60 to 61 boundary
+  ✓ age 70 to 71 boundary
+  ✓ senior international premium
+  ✓ decimal rounding half up
+  ✓ rejects unsupported plan
+  ✓ rejects unsupported coverage
+  ✓ rejects trip end before start
+
+   PASS  Tests\Unit\StateMachineTest (4 tests, 10 assertions)
+  ✓ can transition through happy path
+  ✓ rejects regression from issued to submitted
+  ✓ rejects regression from issued to failed
+  ✓ allows retriable failure rollback to validated
+
+   PASS  Tests\Feature\DatabaseConstraintTest (3 tests, 4 assertions)
+  ✓ raw database blocks duplicate agent and client request id
+  ✓ raw database blocks duplicate policy number
+  ✓ model guard blocks tampering with immutable premium snapshot
+
+   PASS  Tests\Feature\IdempotencyTest (4 tests, 11 assertions)
+  ✓ repeated submission returns 200 and does not duplicate
+  ✓ repeated submission with different payload flags mismatch
+  ✓ same client request id from different agents creates distinct requests
+  ✓ concurrency race condition arbitration
+
+   PASS  Tests\Feature\IssuanceTest (2 tests, 13 assertions)
+  ✓ successful provider submission produces single policy and issued state
+  ✓ repeated submit on issued policy makes no second provider call
+
+   PASS  Tests\Feature\PolicyIntakeTest (10 tests, 78 assertions)
+  ✓ creates policy request with correct premium and status
+  ✓ rejects missing required fields
+  ✓ rejects trip end before trip start
+  ✓ rejects unsupported plan code
+  ✓ rejects unsupported sum insured
+  ✓ rejects date of birth after trip start
+  ✓ can retrieve policy request by id
+  ✓ returns 404 for unknown policy id
+  ✓ lists policy requests with pagination and filter
+  ✓ returns 422 on invalid status filter
+
+   PASS  Tests\Feature\ReliabilityCallbackTest (2 tests, 13 assertions)
+  ✓ triple callback applied once and duplicates ignored
+  ✓ late rejected callback does not overwrite issued state
+
+   PASS  Tests\Feature\ReliabilityRetryTest (1 test, 14 assertions)
+  ✓ temporary failure preserves immutable premium and allows safe retry until max attempts
+
+   PASS  Tests\Feature\ReliabilityTimeoutTest (2 tests, 16 assertions)
+  ✓ timeout after success moves to reconciliation and reconciles safely without double issue
+  ✓ artisan reconciliation command resolves timeout state
+</code></pre>
+
+<hr />
+<h2 id="12-operational-visibility-security-privacy-pii-sanitization">12. Operational Visibility, Security, Privacy &amp; PII Sanitization</h2>
+<ol>
+<li><strong>PII Sanitization</strong>: Full dates of birth and customer names are excluded from external HTTP logs and sanitized from provider attempt summaries.</li>
+<li><strong>Append-Only Auditing</strong>: Every state change records <code>from_state</code>, <code>to_state</code>, <code>actor</code>, <code>reason</code>, and a JSON context object. History records are never updated or deleted.</li>
+<li><strong>Database Guardrails</strong>: Financial columns use <code>DECIMAL(12,2)</code>. Critical constraints are enforced by the database engine, ensuring that data integrity survives software bugs or administrative scripts.</li>
+</ol>
+<hr />
+<h2 id="13-interview-defense-guide-technical-qa-cheat-sheet">13. Interview Defense Guide: Technical Q&amp;A Cheat Sheet</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Question an Interviewer Will Ask</th>
+<th style="text-align: left;">Recommended Candidate Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>"How do you stop duplicate requests under concurrency?"</strong></td>
+<td style="text-align: left;"><em>"We do not rely on check-then-insert application logic. We enforce a composite database unique index on <code>(agent_id, client_request_id)</code>. The winning transaction inserts; the losing transaction catches the unique constraint violation exception and safely fetches the committed winner, returning HTTP 200."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"Why not lock in application code or Redis?"</strong></td>
+<td style="text-align: left;"><em>"Application memory locks fail across multi-server horizontal deployments. While Redis distributed locks work well as an optimization, they can expire prematurely under network pauses. The database unique constraint is the ultimate, indestructible source of truth."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"What happens if the insurer times out after issuing?"</strong></td>
+<td style="text-align: left;"><em>"An HTTP timeout is an unknown outcome, not a failure. PolicyFlow transitions the request to <code>NEEDS_RECONCILIATION</code>. The next submit call or scheduled reconciliation command queries <code>GET /api/mock-insurer/policies/{idempotency_key}</code>. If the policy was issued upstream, PolicyFlow links the existing policy number without ever re-issuing."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"Why don't you hold a database transaction during the provider call?"</strong></td>
+<td style="text-align: left;"><em>"Holding a transaction open across network latency holds database row locks, which exhausts the database connection pool during upstream traffic spikes. We use the Claim-Call-Record pattern: Tx A acquires a 30-second lease, the network call executes outside transactions, and Tx B updates the result."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"How do you guarantee ISSUED is never overwritten?"</strong></td>
+<td style="text-align: left;"><em>"The state machine explicitly marks <code>ISSUED</code> as terminal. If a late <code>REJECTED</code> callback or retry arrives, the transition is rejected, recorded as <code>REJECTED_INVALID_TRANSITION</code>, and the <code>ISSUED</code> state remains intact."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"Why store the premium snapshot?"</strong></td>
+<td style="text-align: left;"><em>"Insurance quotes are legally binding contracts. If underwriting pricing tables or age multipliers are updated in the future, previously accepted quotes must never be retroactively recalculated. We seal the exact amount and multiplier breakdown JSON at creation."</em></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>"Why decimals and not floats?"</strong></td>
+<td style="text-align: left;"><em>"Binary IEEE 754 floats suffer from representation drift ($0.1 + 0.2 \neq 0.3$). In financial engines, all multiplications must use arbitrary-precision decimal mathematics (<code>Brick\Math\BigDecimal</code>) and round HALF_UP once at the end."</em></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="14-trade-offs-known-limitations-production-scalability-roadmap">14. Trade-offs, Known Limitations &amp; Production Scalability Roadmap</h2>
+<ol>
+<li><strong>Synchronous Submit</strong>: The current submission endpoint executes inline with a short lease. In high-volume production, submission should be dispatched to an asynchronous queue with exponential backoff and dead-letter queue (DLQ) monitoring.</li>
+<li><strong>Webhook Security</strong>: In production, webhooks must be authenticated using HMAC SHA-256 request signatures (<code>X-Provider-Signature</code>) and timestamp replay protection.</li>
+<li><strong>Multi-Region Distributed Locks</strong>: In ultra-high scale deployments, Redis Redlock can be added in front of database intake as an ingress rate-limiting optimization.</li>
+</ol>
+</body>
+</html>
