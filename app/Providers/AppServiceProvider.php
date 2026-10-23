@@ -11,7 +11,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            \App\Contracts\InsurerClientInterface::class,
+            \App\Services\Insurer\HttpInsurerClient::class
+        );
     }
 
     /**

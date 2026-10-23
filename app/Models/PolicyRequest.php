@@ -52,6 +52,13 @@ class PolicyRequest extends Model
         'submit_lease_until' => 'datetime',
     ];
 
+    protected function premiumAmount(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn ($value) => $value !== null ? number_format((float)$value, 2, '.', '') : null,
+        );
+    }
+
     protected static function booted(): void
     {
         // Enforce immutable pricing snapshot: once premium_amount is set, prevent mutations
