@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: policyflow_app
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_NAME=PolicyFlow
+      - APP_ENV=local
+      - APP_KEY=base64:3fP/wzB7lWcQ1iQz7N3qN9eE8mH4sF2gK7jL6rV0wY4=
+      - APP_DEBUG=true
+      - DB_CONNECTION=sqlite
+      - DB_DATABASE=/var/www/html/database/database.sqlite
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: policyflow_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: policyflow
+      MYSQL_USER: policyflow
+      MYSQL_PASSWORD: secret_password
+      MYSQL_ROOT_PASSWORD: root_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
+    driver: local
